@@ -8,23 +8,1817 @@
     <title></title>
   </head>
   <body class="beige-theme">
-    <h1>This is a sample page</h1>
-<p>Lorem ipsum</p>
-<p>Lorem ipsum</p>
-<p>Lorem ipsum</p>
-<h3>Here is a subheader</h3>
-<p class="quote">Lorem ipsum</p>
-<p>More lorem ipsum</p>
-<style>
-    h1 {
-        color: red;
-        font-family: "Comic Sans MS";
+    <section id="final-project---nopd-misconduct-complaints" class="cell markdown">
+<h1>Final Project - NOPD Misconduct Complaints</h1>
+<p>Source: City of New Orleans Open Data, <a href="https://catalog.data.gov/dataset/nopd-misconduct-complaints" class="uri">https://catalog.data.gov/dataset/nopd-misconduct-complaints</a></p>
+</section>
+<div class="cell code" data-execution_count="1">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading &amp; cleaning the data</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="2">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">&quot;display.max_columns&quot;</span>, <span class="dv">100</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">&quot;display.max_colwidth&quot;</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="output stream stderr">
+<pre><code>/Users/sheridanwall/.pyenv/versions/3.8.2/lib/python3.8/site-packages/pandas/compat/__init__.py:120: UserWarning: Could not import the lzma module. Your installed Python is incomplete. Attempting to use lzma compression will result in a RuntimeError.
+  warnings.warn(msg)
+</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="3">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&#39;NOPD_Misconduct_Complaints.csv&#39;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="3">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
-    .quote {
-        background: #e1e1e1;
-        padding: 20px 10px;
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Incident Type</th>
+      <th>Complaint Tracking Number</th>
+      <th>Date Complaint Occurred</th>
+      <th>Date Complaint Received by NOPD (PIB)</th>
+      <th>Date Complaint Investigation Complete</th>
+      <th>Complaint classification</th>
+      <th>Investigation status</th>
+      <th>Disposition</th>
+      <th>Bureau of Complainant</th>
+      <th>Division of Complainant</th>
+      <th>Unit of Complainant</th>
+      <th>Unit Additional Details of Complainant</th>
+      <th>Working Status of Complainant</th>
+      <th>Shift of Complainant</th>
+      <th>Rule Violation</th>
+      <th>Paragraph Violation</th>
+      <th>Unique Officer Allegation ID</th>
+      <th>Officer Race Ethnicity</th>
+      <th>Officer Gender</th>
+      <th>Officer Age</th>
+      <th>Officer years of service</th>
+      <th>Complainant Gender</th>
+      <th>Complainant Ethnicity</th>
+      <th>Complainant Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Public Initiated</td>
+      <td>2016-0001-P</td>
+      <td>2016-01-01</td>
+      <td>2016-01-01</td>
+      <td>2016-07-21</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>NaN</td>
+      <td>8th District</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 3: PROF CONDUCT</td>
+      <td>PARAGRAPH 01 - Professionalism</td>
+      <td>30664.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Black</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30667.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30669.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Public Initiated</td>
+      <td>2016-0009-P</td>
+      <td>2016-01-04</td>
+      <td>2016-01-04</td>
+      <td>2017-03-20</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>8th District</td>
+      <td>8th District</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 3pm-11pm</td>
+      <td>RULE 2: MORAL CONDUCT</td>
+      <td>PARAGRAPH 01 - ADHERENCE TO LAW</td>
+      <td>30671.0</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Public Initiated</td>
+      <td>2016-0006-P</td>
+      <td>2016-12-30</td>
+      <td>2016-01-04</td>
+      <td>2016-07-25</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>Command Staff</td>
+      <td>Admin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>30674.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>54</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>Black</td>
+      <td>50.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="4">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;Date Complaint Investigation Complete&#39;</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">&quot;Date Complaint Investigation Complete&quot;</span>], <span class="bu">format</span><span class="op">=</span><span class="st">&#39;%Y-%m-</span><span class="sc">%d</span><span class="st">&#39;</span>)</span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="5">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;year_complete&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;Date Complaint Investigation Complete&#39;</span>].dt.year</span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="6">
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;complainant_race_clean&#39;</span>] <span class="op">=</span> df[<span class="st">&quot;Complainant Ethnicity&quot;</span>].replace({</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;B&#39;</span>:<span class="st">&#39;Black&#39;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;b&#39;</span> : <span class="st">&#39;Black&#39;</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;w&#39;</span> : <span class="st">&#39;White&#39;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;W&#39;</span>:<span class="st">&#39;White&#39;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;BLACK&#39;</span>:<span class="st">&#39;Black&#39;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;white&#39;</span>:<span class="st">&#39;White&#39;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;black&#39;</span>:<span class="st">&#39;Black&#39;</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Race-Unknown&#39;</span>: np.nan,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unknown&#39;</span>: np.nan,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unkown&#39;</span>:np.nan</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>df.complainant_race_clean.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="6">
+<pre><code>Black       2092
+White        684
+Hispanic      72
+Asian         11
+Indian         1
+Name: complainant_race_clean, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="7">
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;officer_race_clean&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;Officer Race Ethnicity&#39;</span>].replace({</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Black&#39;</span>:<span class="st">&#39;Black&#39;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;White&#39;</span>:<span class="st">&#39;White&#39;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Hispanic&#39;</span>:<span class="st">&#39;Hispanic&#39;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Asian/Pacifi&#39;</span>:<span class="st">&#39;Asian&#39;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Not Specifie&#39;</span>:np.nan,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Race-Unknown&#39;</span>:np.nan,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;American Ind&#39;</span>:<span class="st">&#39;Indigenous&#39;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Asian/Pacif&#39;</span>:<span class="st">&#39;Asian&#39;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39; Giving Anything of Value&#39;</span>:np.nan,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;PARAGRAPH 01 - Professionalism&#39;</span>:np.nan  </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>df.officer_race_clean.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="7">
+<pre><code>Black         2595
+White         1817
+Hispanic       238
+Asian           77
+Indigenous       9
+Name: officer_race_clean, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="8">
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;officer_age_clean&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;Officer Age&#39;</span>].replace({</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;-38&#39;</span>: np.nan,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;-8&#39;</span>: np.nan,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Female&#39;</span>: np.nan,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Male&#39;</span>: np.nan</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;officer_age_clean&#39;].value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="9">
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;officer_age_clean&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;officer_age_clean&#39;</span>].astype(<span class="bu">float</span>)</span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="10">
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;officer_gender_clean&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;Officer Gender&#39;</span>].replace({</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Male&#39;</span>:<span class="st">&#39;Male&#39;</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Female&#39;</span>:<span class="st">&#39;Female&#39;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;N&#39;</span>: np.nan,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Black&#39;</span>: np.nan,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;White&#39;</span>: np.nan</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>df.officer_gender_clean.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="10">
+<pre><code>Male      3779
+Female     996
+Name: officer_gender_clean, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="11">
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;incident_type&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;Incident Type&#39;</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.incident_type.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="11">
+<pre><code>Public Initiated    3460
+Rank Initiated      1830
+Name: incident_type, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="12">
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&#39;minority&#39;</span>] <span class="op">=</span> df[<span class="st">&#39;officer_race_clean&#39;</span>].replace({</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Black&#39;</span>:<span class="st">&#39;M&#39;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;White&#39;</span>:<span class="st">&#39;W&#39;</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Hispanic&#39;</span>:<span class="st">&#39;M&#39;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Asian&#39;</span>:<span class="st">&#39;M&#39;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Indigenous&#39;</span>:<span class="st">&#39;M&#39;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>df.minority.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="12">
+<pre><code>M    2919
+W    1817
+Name: minority, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="13">
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df.head()</span></span></code></pre></div>
+</div>
+<section id="brainstorming-the-regression" class="cell markdown">
+<h1>Brainstorming the regression</h1>
+<p>Definition of each disposition (pg. 18): <a href="https://www.nola.gov/getattachment/NOPD/Policies/Chapter-52-1-1-Misconduct-Intake-and-Complaint-Investigation-EFFECTIVE-3-18-18.pdf/" class="uri">https://www.nola.gov/getattachment/NOPD/Policies/Chapter-52-1-1-Misconduct-Intake-and-Complaint-Investigation-EFFECTIVE-3-18-18.pdf/</a></p>
+<ul>
+<li>Is the police department's discplinary board racist?
+<ul>
+<li>Were complaints filed against Black officers marked as sustained more often than others?
+<ul>
+<li>Controlling for gender, age? 7th district? Year?</li>
+<li>Public initiated vs. rank initiated? Does who made the complaint factor into the decision? Is the Public more likely to accuse a Black officer?</li>
+<li>Control for race of the complainant</li>
+</ul></li>
+<li>Are they dismissing complaints against white police officers more often than Black?</li>
+<li>Use unfounded vs. sustained?
+<ul>
+<li>Unfounded—the investigation determines by a preponderance of the evidence that the alleged misconduct did not occur or did not involve the accused officer.</li>
+<li>Sustained—the investigation determines by a preponderance of the evidence that the alleged misconduct did occur.</li>
+</ul></li>
+</ul></li>
+<li>Are Black officers more often reported for "serious" offenses? By who (public vs. rank)? Are complaints against Black officers more likely to result in a sustained conviction?</li>
+</ul>
+</section>
+<div class="cell code" data-execution_count="14">
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df.Disposition.value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="15">
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;Division of Complainant&#39;].value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="16">
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df.year_complete.value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="17">
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;incident_type&#39;].value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="18">
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;Officer Race Ethnicity&#39;].value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="19">
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;Complainant Ethnicity&#39;].value_counts()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="20">
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df[&#39;Officer Age&#39;].value_counts().tail(40)</span></span></code></pre></div>
+</div>
+<section id="preparing-dataframe-for-logistic-regression" class="cell markdown">
+<h1>Preparing DataFrame for logistic regression</h1>
+</section>
+<div class="cell code" data-execution_count="21">
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df[df[<span class="st">&#39;Disposition&#39;</span>] <span class="op">!=</span> <span class="st">&#39;Pending&#39;</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df2.shape</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="22">
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df2.Disposition.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="22">
+<pre><code>Unfounded                       1121
+Sustained                        801
+Not Sustained                    582
+Other                            540
+Exonerated                       526
+NFIM                             359
+Withdrawn - Mediation            177
+Negotiated Settlement            106
+Resigned under investigation       2
+Name: Disposition, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="23">
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">&#39;dispostion_new&#39;</span>] <span class="op">=</span> df2.Disposition.replace({</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Sustained&#39;</span>:<span class="st">&#39;S&#39;</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Unfounded&#39;</span>: <span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Not Sustained&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Other&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Exonerated&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;NFIM&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Withdrawn - Mediation&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Negotiated Settlement&#39;</span>:<span class="st">&#39;O&#39;</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Resigned under investigation&#39;</span>:<span class="st">&#39;O&#39;</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="output stream stderr">
+<pre><code>&lt;ipython-input-23-3cc366b8e9aa&gt;:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df2[&#39;dispostion_new&#39;] = df2.Disposition.replace({
+</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="24">
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df2.head()</span></span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="25">
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df2.dispostion_new.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="25">
+<pre><code>O    3413
+S     801
+Name: dispostion_new, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="26" data-scrolled="true">
+<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">&#39;sustained&#39;</span>] <span class="op">=</span> df2.dispostion_new.replace({<span class="st">&#39;S&#39;</span>:<span class="dv">1</span>,<span class="st">&#39;O&#39;</span>: <span class="dv">0</span>})</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df2.head()</span></code></pre></div>
+<div class="output stream stderr">
+<pre><code>&lt;ipython-input-26-2a0c18872483&gt;:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df2[&#39;sustained&#39;] = df2.dispostion_new.replace({&#39;S&#39;:1,&#39;O&#39;: 0})
+</code></pre>
+</div>
+<div class="output execute_result" data-execution_count="26">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Incident Type</th>
+      <th>Complaint Tracking Number</th>
+      <th>Date Complaint Occurred</th>
+      <th>Date Complaint Received by NOPD (PIB)</th>
+      <th>Date Complaint Investigation Complete</th>
+      <th>Complaint classification</th>
+      <th>Investigation status</th>
+      <th>Disposition</th>
+      <th>Bureau of Complainant</th>
+      <th>Division of Complainant</th>
+      <th>Unit of Complainant</th>
+      <th>Unit Additional Details of Complainant</th>
+      <th>Working Status of Complainant</th>
+      <th>Shift of Complainant</th>
+      <th>Rule Violation</th>
+      <th>Paragraph Violation</th>
+      <th>Unique Officer Allegation ID</th>
+      <th>Officer Race Ethnicity</th>
+      <th>Officer Gender</th>
+      <th>Officer Age</th>
+      <th>Officer years of service</th>
+      <th>Complainant Gender</th>
+      <th>Complainant Ethnicity</th>
+      <th>Complainant Age</th>
+      <th>year_complete</th>
+      <th>complainant_race_clean</th>
+      <th>officer_race_clean</th>
+      <th>officer_age_clean</th>
+      <th>officer_gender_clean</th>
+      <th>incident_type</th>
+      <th>minority</th>
+      <th>dispostion_new</th>
+      <th>sustained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Public Initiated</td>
+      <td>2016-0001-P</td>
+      <td>2016-01-01</td>
+      <td>2016-01-01</td>
+      <td>2016-07-21</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>NaN</td>
+      <td>8th District</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 3: PROF CONDUCT</td>
+      <td>PARAGRAPH 01 - Professionalism</td>
+      <td>30664.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Public Initiated</td>
+      <td>NaN</td>
+      <td>O</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30667.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>60.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30669.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>44.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Public Initiated</td>
+      <td>2016-0009-P</td>
+      <td>2016-01-04</td>
+      <td>2016-01-04</td>
+      <td>2017-03-20</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>8th District</td>
+      <td>8th District</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 3pm-11pm</td>
+      <td>RULE 2: MORAL CONDUCT</td>
+      <td>PARAGRAPH 01 - ADHERENCE TO LAW</td>
+      <td>30671.0</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2017.0</td>
+      <td>NaN</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>W</td>
+      <td>O</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Public Initiated</td>
+      <td>2016-0006-P</td>
+      <td>2016-12-30</td>
+      <td>2016-01-04</td>
+      <td>2016-07-25</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>Command Staff</td>
+      <td>Admin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>30674.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>54</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>Black</td>
+      <td>50.0</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>Black</td>
+      <td>54.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="27" data-scrolled="true">
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;under 25&#39;</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;25-38&#39;</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;39-54&#39;</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;55-69&#39;</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;over 70&#39;</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>breaks <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">39</span>, <span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">999</span>]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">&#39;officer_age_bin&#39;</span>] <span class="op">=</span> pd.cut(df2[<span class="st">&#39;officer_age_clean&#39;</span>], bins<span class="op">=</span>breaks, labels<span class="op">=</span>labels)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>df2.head()</span></code></pre></div>
+<div class="output stream stderr">
+<pre><code>&lt;ipython-input-27-05dffa1b8b85&gt;:9: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df2[&#39;officer_age_bin&#39;] = pd.cut(df2[&#39;officer_age_clean&#39;], bins=breaks, labels=labels)
+</code></pre>
+</div>
+<div class="output execute_result" data-execution_count="27">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Incident Type</th>
+      <th>Complaint Tracking Number</th>
+      <th>Date Complaint Occurred</th>
+      <th>Date Complaint Received by NOPD (PIB)</th>
+      <th>Date Complaint Investigation Complete</th>
+      <th>Complaint classification</th>
+      <th>Investigation status</th>
+      <th>Disposition</th>
+      <th>Bureau of Complainant</th>
+      <th>Division of Complainant</th>
+      <th>Unit of Complainant</th>
+      <th>Unit Additional Details of Complainant</th>
+      <th>Working Status of Complainant</th>
+      <th>Shift of Complainant</th>
+      <th>Rule Violation</th>
+      <th>Paragraph Violation</th>
+      <th>Unique Officer Allegation ID</th>
+      <th>Officer Race Ethnicity</th>
+      <th>Officer Gender</th>
+      <th>Officer Age</th>
+      <th>Officer years of service</th>
+      <th>Complainant Gender</th>
+      <th>Complainant Ethnicity</th>
+      <th>Complainant Age</th>
+      <th>year_complete</th>
+      <th>complainant_race_clean</th>
+      <th>officer_race_clean</th>
+      <th>officer_age_clean</th>
+      <th>officer_gender_clean</th>
+      <th>incident_type</th>
+      <th>minority</th>
+      <th>dispostion_new</th>
+      <th>sustained</th>
+      <th>officer_age_bin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Public Initiated</td>
+      <td>2016-0001-P</td>
+      <td>2016-01-01</td>
+      <td>2016-01-01</td>
+      <td>2016-07-21</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>NaN</td>
+      <td>8th District</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 3: PROF CONDUCT</td>
+      <td>PARAGRAPH 01 - Professionalism</td>
+      <td>30664.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Public Initiated</td>
+      <td>NaN</td>
+      <td>O</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30667.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>60.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>55-69</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30669.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>44.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Public Initiated</td>
+      <td>2016-0009-P</td>
+      <td>2016-01-04</td>
+      <td>2016-01-04</td>
+      <td>2017-03-20</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>8th District</td>
+      <td>8th District</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 3pm-11pm</td>
+      <td>RULE 2: MORAL CONDUCT</td>
+      <td>PARAGRAPH 01 - ADHERENCE TO LAW</td>
+      <td>30671.0</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2017.0</td>
+      <td>NaN</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>W</td>
+      <td>O</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Public Initiated</td>
+      <td>2016-0006-P</td>
+      <td>2016-12-30</td>
+      <td>2016-01-04</td>
+      <td>2016-07-25</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>Command Staff</td>
+      <td>Admin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>30674.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>54</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>Black</td>
+      <td>50.0</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>Black</td>
+      <td>54.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="28">
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df2.officer_age_bin.value_counts()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="28">
+<pre><code>25-38       1659
+39-54       1450
+55-69        227
+under 25     179
+over 70        8
+Name: officer_age_bin, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="29">
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>new_df <span class="op">=</span> df2.drop(columns <span class="op">=</span> [<span class="st">&#39;Incident Type&#39;</span>, <span class="st">&#39;Date Complaint Received by NOPD (PIB)&#39;</span>, <span class="st">&#39;Complaint classification&#39;</span>,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;Bureau of Complainant&#39;</span>,<span class="st">&#39;Division of Complainant&#39;</span>,<span class="st">&#39;Unit of Complainant&#39;</span>,<span class="st">&#39;Date Complaint Occurred&#39;</span>,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;Unit Additional Details of Complainant&#39;</span>,<span class="st">&#39;Working Status of Complainant&#39;</span>,<span class="st">&#39;Shift of Complainant&#39;</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;Unique Officer Allegation ID&#39;</span>,<span class="st">&#39;Officer Race Ethnicity&#39;</span>,<span class="st">&#39;Officer Age&#39;</span>,<span class="st">&#39;Officer years of service&#39;</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">&#39;Officer Gender&#39;</span>,<span class="st">&#39;Complainant Gender&#39;</span>,<span class="st">&#39;Complainant Ethnicity&#39;</span>,<span class="st">&#39;Complainant Age&#39;</span>])</span></code></pre></div>
+</div>
+<div class="cell code" data-execution_count="30">
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>new_df <span class="op">=</span> new_df.dropna()</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>new_df.shape</span></code></pre></div>
+<div class="output execute_result" data-execution_count="30">
+<pre><code>(2050, 16)</code></pre>
+</div>
+</div>
+<div class="cell code" data-execution_count="31">
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>new_df.head()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="31">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Complaint Tracking Number</th>
+      <th>Date Complaint Investigation Complete</th>
+      <th>Investigation status</th>
+      <th>Disposition</th>
+      <th>Rule Violation</th>
+      <th>Paragraph Violation</th>
+      <th>year_complete</th>
+      <th>complainant_race_clean</th>
+      <th>officer_race_clean</th>
+      <th>officer_age_clean</th>
+      <th>officer_gender_clean</th>
+      <th>incident_type</th>
+      <th>minority</th>
+      <th>dispostion_new</th>
+      <th>sustained</th>
+      <th>officer_age_bin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2016-0002-P</td>
+      <td>2016-08-03</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>60.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>55-69</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2016-0002-P</td>
+      <td>2016-08-03</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>44.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2016-0006-P</td>
+      <td>2016-07-25</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>Black</td>
+      <td>54.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2016-0007-P</td>
+      <td>2016-07-25</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>Black</td>
+      <td>53.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2016-0003-P</td>
+      <td>2016-06-09</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>41.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code">
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+</div>
+<div class="cell code">
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+</div>
+<section id="testing-logistic-regressions" class="cell markdown">
+<h1>Testing logistic regressions</h1>
+</section>
+<div class="cell code" data-execution_count="33">
+<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(<span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="st">    sustained ~ </span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="st">        C(officer_race_clean, Treatment(&#39;White&#39;))       </span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>, data<span class="op">=</span>df2)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>results.summary()</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.510232
+         Iterations 5
+</code></pre>
+</div>
+<div class="output execute_result" data-execution_count="33">
+<table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>sustained</td>    <th>  No. Observations:  </th>  <td>  3817</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>  3812</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     4</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 07 Apr 2021</td> <th>  Pseudo R-squ.:     </th> <td>6.371e-05</td>
+</tr>
+<tr>
+  <th>Time:</th>                <td>12:15:38</td>     <th>  Log-Likelihood:    </th> <td> -1947.6</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -1947.7</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th>  <td>0.9929</td>  
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                             <td></td>                                <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                                               <td>   -1.3558</td> <td>    0.065</td> <td>  -20.940</td> <td> 0.000</td> <td>   -1.483</td> <td>   -1.229</td>
+</tr>
+<tr>
+  <th>C(officer_race_clean, Treatment('White'))[T.Asian]</th>      <td>   -0.0094</td> <td>    0.330</td> <td>   -0.029</td> <td> 0.977</td> <td>   -0.656</td> <td>    0.637</td>
+</tr>
+<tr>
+  <th>C(officer_race_clean, Treatment('White'))[T.Black]</th>      <td>    0.0294</td> <td>    0.084</td> <td>    0.349</td> <td> 0.727</td> <td>   -0.135</td> <td>    0.194</td>
+</tr>
+<tr>
+  <th>C(officer_race_clean, Treatment('White'))[T.Hispanic]</th>   <td>   -0.0435</td> <td>    0.192</td> <td>   -0.226</td> <td> 0.821</td> <td>   -0.421</td> <td>    0.333</td>
+</tr>
+<tr>
+  <th>C(officer_race_clean, Treatment('White'))[T.Indigenous]</th> <td>    0.1031</td> <td>    0.804</td> <td>    0.128</td> <td> 0.898</td> <td>   -1.474</td> <td>    1.680</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="cell code" data-execution_count="34">
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;coef&#39;</span>: results.params.values,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;odds ratio&#39;</span>: np.exp(results.params.values),</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pvalue&#39;</span>: results.pvalues,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;name&#39;</span>: results.params.index</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>coefs</span></code></pre></div>
+<div class="output execute_result" data-execution_count="34">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>coef</th>
+      <th>odds ratio</th>
+      <th>pvalue</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Intercept</th>
+      <td>-1.355835</td>
+      <td>0.257732</td>
+      <td>2.322119e-97</td>
+      <td>Intercept</td>
+    </tr>
+    <tr>
+      <th>C(officer_race_clean, Treatment('White'))[T.Asian]</th>
+      <td>-0.009406</td>
+      <td>0.990638</td>
+      <td>9.772512e-01</td>
+      <td>C(officer_race_clean, Treatment('White'))[T.Asian]</td>
+    </tr>
+    <tr>
+      <th>C(officer_race_clean, Treatment('White'))[T.Black]</th>
+      <td>0.029383</td>
+      <td>1.029819</td>
+      <td>7.268450e-01</td>
+      <td>C(officer_race_clean, Treatment('White'))[T.Black]</td>
+    </tr>
+    <tr>
+      <th>C(officer_race_clean, Treatment('White'))[T.Hispanic]</th>
+      <td>-0.043531</td>
+      <td>0.957403</td>
+      <td>8.209657e-01</td>
+      <td>C(officer_race_clean, Treatment('White'))[T.Hispanic]</td>
+    </tr>
+    <tr>
+      <th>C(officer_race_clean, Treatment('White'))[T.Indigenous]</th>
+      <td>0.103072</td>
+      <td>1.108571</td>
+      <td>8.980410e-01</td>
+      <td>C(officer_race_clean, Treatment('White'))[T.Indigenous]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="35">
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>df2.head()</span></code></pre></div>
+<div class="output execute_result" data-execution_count="35">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Incident Type</th>
+      <th>Complaint Tracking Number</th>
+      <th>Date Complaint Occurred</th>
+      <th>Date Complaint Received by NOPD (PIB)</th>
+      <th>Date Complaint Investigation Complete</th>
+      <th>Complaint classification</th>
+      <th>Investigation status</th>
+      <th>Disposition</th>
+      <th>Bureau of Complainant</th>
+      <th>Division of Complainant</th>
+      <th>Unit of Complainant</th>
+      <th>Unit Additional Details of Complainant</th>
+      <th>Working Status of Complainant</th>
+      <th>Shift of Complainant</th>
+      <th>Rule Violation</th>
+      <th>Paragraph Violation</th>
+      <th>Unique Officer Allegation ID</th>
+      <th>Officer Race Ethnicity</th>
+      <th>Officer Gender</th>
+      <th>Officer Age</th>
+      <th>Officer years of service</th>
+      <th>Complainant Gender</th>
+      <th>Complainant Ethnicity</th>
+      <th>Complainant Age</th>
+      <th>year_complete</th>
+      <th>complainant_race_clean</th>
+      <th>officer_race_clean</th>
+      <th>officer_age_clean</th>
+      <th>officer_gender_clean</th>
+      <th>incident_type</th>
+      <th>minority</th>
+      <th>dispostion_new</th>
+      <th>sustained</th>
+      <th>officer_age_bin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Public Initiated</td>
+      <td>2016-0001-P</td>
+      <td>2016-01-01</td>
+      <td>2016-01-01</td>
+      <td>2016-07-21</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>NaN</td>
+      <td>8th District</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 3: PROF CONDUCT</td>
+      <td>PARAGRAPH 01 - Professionalism</td>
+      <td>30664.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Public Initiated</td>
+      <td>NaN</td>
+      <td>O</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30667.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>60.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>55-69</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Public Initiated</td>
+      <td>2016-0002-P</td>
+      <td>2016-01-02</td>
+      <td>2016-01-01</td>
+      <td>2016-08-03</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>7th District</td>
+      <td>Night Watch</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 11pm-7am</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 04 - NEGLECT OF DUTY</td>
+      <td>30669.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>2016.0</td>
+      <td>White</td>
+      <td>Black</td>
+      <td>44.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Public Initiated</td>
+      <td>2016-0009-P</td>
+      <td>2016-01-04</td>
+      <td>2016-01-04</td>
+      <td>2017-03-20</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Unfounded</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>8th District</td>
+      <td>8th District</td>
+      <td>Patrol</td>
+      <td>Regular Working</td>
+      <td>Between 3pm-11pm</td>
+      <td>RULE 2: MORAL CONDUCT</td>
+      <td>PARAGRAPH 01 - ADHERENCE TO LAW</td>
+      <td>30671.0</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2017.0</td>
+      <td>NaN</td>
+      <td>White</td>
+      <td>NaN</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>W</td>
+      <td>O</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Public Initiated</td>
+      <td>2016-0006-P</td>
+      <td>2016-12-30</td>
+      <td>2016-01-04</td>
+      <td>2016-07-25</td>
+      <td>DI-1</td>
+      <td>Completed</td>
+      <td>Exonerated</td>
+      <td>FOB - Field Operations Bureau</td>
+      <td>Command Staff</td>
+      <td>Admin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RULE 4: PERF OF DUTY</td>
+      <td>PARAGRAPH 02 - INSTRUCTIONS FROM AUTHORITATIVE SOURCE</td>
+      <td>30674.0</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>54</td>
+      <td>NaN</td>
+      <td>Female</td>
+      <td>Black</td>
+      <td>50.0</td>
+      <td>2016.0</td>
+      <td>Black</td>
+      <td>Black</td>
+      <td>54.0</td>
+      <td>Male</td>
+      <td>Public Initiated</td>
+      <td>M</td>
+      <td>O</td>
+      <td>0</td>
+      <td>39-54</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="36">
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(<span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="st">    sustained ~ </span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="st">        C(minority, Treatment(&#39;W&#39;))</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(officer_gender_clean, Treatment(&#39;Female&#39;))</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(incident_type, Treatment(&#39;Public Initiated&#39;))</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>, data<span class="op">=</span>df2)</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>results.summary()</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.473037
+         Iterations 6
+</code></pre>
+</div>
+<div class="output execute_result" data-execution_count="36">
+<table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>sustained</td>    <th>  No. Observations:  </th>  <td>  3817</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>  3813</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     3</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 07 Apr 2021</td> <th>  Pseudo R-squ.:     </th>  <td>0.07296</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>12:15:38</td>     <th>  Log-Likelihood:    </th> <td> -1805.6</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -1947.7</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>2.619e-61</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                                  <td></td>                                     <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                                                         <td>   -2.1208</td> <td>    0.123</td> <td>  -17.193</td> <td> 0.000</td> <td>   -2.363</td> <td>   -1.879</td>
+</tr>
+<tr>
+  <th>C(minority, Treatment('W'))[T.M]</th>                                  <td>    0.0177</td> <td>    0.087</td> <td>    0.203</td> <td> 0.839</td> <td>   -0.153</td> <td>    0.188</td>
+</tr>
+<tr>
+  <th>C(officer_gender_clean, Treatment('Female'))[T.Male]</th>              <td>    0.2653</td> <td>    0.106</td> <td>    2.512</td> <td> 0.012</td> <td>    0.058</td> <td>    0.472</td>
+</tr>
+<tr>
+  <th>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</th> <td>    1.3862</td> <td>    0.083</td> <td>   16.612</td> <td> 0.000</td> <td>    1.223</td> <td>    1.550</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="cell code" data-execution_count="37">
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;coef&#39;</span>: results.params.values,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;odds ratio&#39;</span>: np.exp(results.params.values),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pvalue&#39;</span>: results.pvalues,</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;name&#39;</span>: results.params.index</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>coefs</span></code></pre></div>
+<div class="output execute_result" data-execution_count="37">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>coef</th>
+      <th>odds ratio</th>
+      <th>pvalue</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Intercept</th>
+      <td>-2.120770</td>
+      <td>0.119939</td>
+      <td>3.000270e-66</td>
+      <td>Intercept</td>
+    </tr>
+    <tr>
+      <th>C(minority, Treatment('W'))[T.M]</th>
+      <td>0.017657</td>
+      <td>1.017814</td>
+      <td>8.389938e-01</td>
+      <td>C(minority, Treatment('W'))[T.M]</td>
+    </tr>
+    <tr>
+      <th>C(officer_gender_clean, Treatment('Female'))[T.Male]</th>
+      <td>0.265258</td>
+      <td>1.303767</td>
+      <td>1.202003e-02</td>
+      <td>C(officer_gender_clean, Treatment('Female'))[T.Male]</td>
+    </tr>
+    <tr>
+      <th>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</th>
+      <td>1.386168</td>
+      <td>3.999495</td>
+      <td>5.730806e-62</td>
+      <td>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell code" data-execution_count="42">
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(<span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="st">    sustained ~ </span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">        C(minority, Treatment(&#39;W&#39;))</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(officer_gender_clean, Treatment(&#39;Male&#39;))</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(incident_type, Treatment(&#39;Public Initiated&#39;))</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(officer_age_bin, Treatment(&#39;25-38&#39;))</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>, data<span class="op">=</span>df2)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>results.summary()</span></code></pre></div>
+<div class="output stream stdout">
+<pre><code>Warning: Maximum number of iterations has been exceeded.
+         Current function value: 0.472642
+         Iterations: 35
+</code></pre>
+</div>
+<div class="output stream stderr">
+<pre><code>/Users/sheridanwall/.pyenv/versions/3.8.2/lib/python3.8/site-packages/statsmodels/base/model.py:566: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn(&quot;Maximum Likelihood optimization failed to &quot;
+</code></pre>
+</div>
+<div class="output execute_result" data-execution_count="42">
+<table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>sustained</td>    <th>  No. Observations:  </th>  <td>  3498</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>  3490</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     7</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 07 Apr 2021</td> <th>  Pseudo R-squ.:     </th>  <td>0.07999</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>12:23:54</td>     <th>  Log-Likelihood:    </th> <td> -1653.3</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>False</td>      <th>  LL-Null:           </th> <td> -1797.1</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>2.824e-58</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                                  <td></td>                                     <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                                                         <td>   -1.8492</td> <td>    0.092</td> <td>  -20.118</td> <td> 0.000</td> <td>   -2.029</td> <td>   -1.669</td>
+</tr>
+<tr>
+  <th>C(minority, Treatment('W'))[T.M]</th>                                  <td>    0.0128</td> <td>    0.092</td> <td>    0.139</td> <td> 0.890</td> <td>   -0.168</td> <td>    0.194</td>
+</tr>
+<tr>
+  <th>C(officer_gender_clean, Treatment('Male'))[T.Female]</th>              <td>   -0.2332</td> <td>    0.112</td> <td>   -2.085</td> <td> 0.037</td> <td>   -0.452</td> <td>   -0.014</td>
+</tr>
+<tr>
+  <th>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</th> <td>    1.4482</td> <td>    0.087</td> <td>   16.622</td> <td> 0.000</td> <td>    1.277</td> <td>    1.619</td>
+</tr>
+<tr>
+  <th>C(officer_age_bin, Treatment('25-38'))[T.under 25]</th>                <td>    0.0146</td> <td>    0.201</td> <td>    0.073</td> <td> 0.942</td> <td>   -0.379</td> <td>    0.408</td>
+</tr>
+<tr>
+  <th>C(officer_age_bin, Treatment('25-38'))[T.39-54]</th>                   <td>   -0.0650</td> <td>    0.094</td> <td>   -0.693</td> <td> 0.488</td> <td>   -0.249</td> <td>    0.119</td>
+</tr>
+<tr>
+  <th>C(officer_age_bin, Treatment('25-38'))[T.55-69]</th>                   <td>    0.0484</td> <td>    0.180</td> <td>    0.269</td> <td> 0.788</td> <td>   -0.304</td> <td>    0.400</td>
+</tr>
+<tr>
+  <th>C(officer_age_bin, Treatment('25-38'))[T.over 70]</th>                 <td>  -17.6936</td> <td> 8762.720</td> <td>   -0.002</td> <td> 0.998</td> <td>-1.72e+04</td> <td> 1.72e+04</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="cell code" data-execution_count="43" data-scrolled="true">
+<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;coef&#39;</span>: results.params.values,</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;odds ratio&#39;</span>: np.exp(results.params.values),</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pvalue&#39;</span>: results.pvalues,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;name&#39;</span>: results.params.index</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>coefs</span></code></pre></div>
+<div class="output execute_result" data-execution_count="43">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>coef</th>
+      <th>odds ratio</th>
+      <th>pvalue</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Intercept</th>
+      <td>-1.849183</td>
+      <td>1.573657e-01</td>
+      <td>5.177686e-90</td>
+      <td>Intercept</td>
+    </tr>
+    <tr>
+      <th>C(minority, Treatment('W'))[T.M]</th>
+      <td>0.012795</td>
+      <td>1.012877e+00</td>
+      <td>8.897253e-01</td>
+      <td>C(minority, Treatment('W'))[T.M]</td>
+    </tr>
+    <tr>
+      <th>C(officer_gender_clean, Treatment('Male'))[T.Female]</th>
+      <td>-0.233205</td>
+      <td>7.919913e-01</td>
+      <td>3.703136e-02</td>
+      <td>C(officer_gender_clean, Treatment('Male'))[T.Female]</td>
+    </tr>
+    <tr>
+      <th>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</th>
+      <td>1.448157</td>
+      <td>4.255267e+00</td>
+      <td>4.856171e-62</td>
+      <td>C(incident_type, Treatment('Public Initiated'))[T.Rank Initiated]</td>
+    </tr>
+    <tr>
+      <th>C(officer_age_bin, Treatment('25-38'))[T.under 25]</th>
+      <td>0.014646</td>
+      <td>1.014754e+00</td>
+      <td>9.418631e-01</td>
+      <td>C(officer_age_bin, Treatment('25-38'))[T.under 25]</td>
+    </tr>
+    <tr>
+      <th>C(officer_age_bin, Treatment('25-38'))[T.39-54]</th>
+      <td>-0.064998</td>
+      <td>9.370691e-01</td>
+      <td>4.884349e-01</td>
+      <td>C(officer_age_bin, Treatment('25-38'))[T.39-54]</td>
+    </tr>
+    <tr>
+      <th>C(officer_age_bin, Treatment('25-38'))[T.55-69]</th>
+      <td>0.048351</td>
+      <td>1.049539e+00</td>
+      <td>7.877151e-01</td>
+      <td>C(officer_age_bin, Treatment('25-38'))[T.55-69]</td>
+    </tr>
+    <tr>
+      <th>C(officer_age_bin, Treatment('25-38'))[T.over 70]</th>
+      <td>-17.693635</td>
+      <td>2.068959e-08</td>
+      <td>9.983889e-01</td>
+      <td>C(officer_age_bin, Treatment('25-38'))[T.over 70]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="testing-the-regression-with-new-dataframe" class="cell markdown">
+<h1>Testing the regression with new dataframe</h1>
+</section>
+<div class="cell code">
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.logit(<span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="st">    sustained ~ </span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="st">        C(minority, Treatment(&#39;W&#39;))</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(officer_gender_clean, Treatment(&#39;Male&#39;))</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(incident_type, Treatment(&#39;Public Initiated&#39;))</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="st">        + C(officer_age_bin, Treatment(&#39;25-38&#39;))</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>, data<span class="op">=</span>new_df)</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>results.summary()</span></code></pre></div>
+</div>
+<div class="cell code">
+<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;coef&#39;</span>: results.params.values,</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;odds ratio&#39;</span>: np.exp(results.params.values),</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pvalue&#39;</span>: results.pvalues,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;name&#39;</span>: results.params.index</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>coefs</span></code></pre></div>
+</div>
+<div class="cell code">
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+</div>
+
   </body>
 </html>

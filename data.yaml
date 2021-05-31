@@ -1,25 +1,25 @@
-name: Jonathan Soma
-bio: I'm not a journalist but I can pretend to be one (sometimes)
+name: Sheridan Wall
+bio: I’m a writer and data journalist from New Orleans, Louisiana. I’m currently pursuing a master's degree at Columbia University in New York City.
 links:
-  - target: mailto:jonathan.soma@gmail.com
+  - target: mailto:slw2177@columbia.edu
     text: 📧 email
-  - target: https://jonathansoma.com
+  - target: https://github.com/sheridanwall
     text: 🏠 homepage
-  - target: https://twitter.com/dangerscarf
-    text: '@dangerscarf'
+  - target: https://twitter.com/sheridanlwall
+    text: '@sheridanlwall'
 pages:
   - type: gdoc
-    title: this is the first project
+    title: Unchecked short-term rentals decimate New Orleans affordable housing
     slug: first-project
-    url: https://docs.google.com/document/d/126LLa_EKG_nBbmA53HCG3pMVbjKBRnQWJWDL9FUSmHo/edit?usp=sharing
+    url: https://docs.google.com/document/d/1-FBOhIw00t8sPsGIXH1sEyqZCOGamgA0lfN_99DmFwM/edit?usp=sharing
   - type: gdoc
     title: this is the second project
     slug: second-project
     url: https://docs.google.com/document/d/1-ehYb4V3gtrS7LTlfqr27cZum1qGwX2KwczYLa1w-2Y/edit?usp=sharing
   - type: html
-    title: this is the third project
+    title: Analyzing bias with logistic regression
     slug: third-project
-    filepath: content/sample-page.html
+    filepath: content/output.html
   - type: html
     title: this is the third project
     template: html_bootstrap
