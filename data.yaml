@@ -12,16 +12,8 @@ pages:
     title: Unchecked short-term rentals decimate New Orleans affordable housing
     slug: first-project
     url: https://docs.google.com/document/d/1-FBOhIw00t8sPsGIXH1sEyqZCOGamgA0lfN_99DmFwM/edit?usp=sharing
-  - type: gdoc
-    title: this is the second project
-    slug: second-project
-    url: https://docs.google.com/document/d/1-ehYb4V3gtrS7LTlfqr27cZum1qGwX2KwczYLa1w-2Y/edit?usp=sharing
   - type: html
     title: Analyzing bias with logistic regression
     slug: third-project
     filepath: content/output.html
-  - type: html
-    title: this is the third project
-    template: html_bootstrap
-    slug: yet-another-project
-    filepath: content/sample-page.html
+  
