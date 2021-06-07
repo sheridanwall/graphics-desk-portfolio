@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Scrollama: Sticky Overlay Example</title>
+    <meta name="description" content="Scrollama: Sticky Overlay Example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #scrolly {
+        position: relative;
+        background-color: #f3f3f3;
+        padding: 1rem;
+      }
+      #scrolly2 {
+        position: relative;
+        background-color: #f3f3f3;
+        padding: 1rem;
+      }
+    
+
+      article {
+        position: relative;
+        padding: 0;
+        max-width: 20rem;
+        margin: 0 auto;
+      }
+
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        background-color: #8a8a8a;
+        z-index: 0;
+        top: 12.5vh;
+        height: 75vh;
+        /* Center everything inside */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("images/film_NM.jpeg");
+        background-size: cover;
+        background-position: center center
+      }
+      .sticky-thing2 {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        background-color: #8a8a8a;
+        z-index: 0;
+        top: 12.5vh;
+        height: 75vh;
+        /* Center everything inside */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("images/film_NM.jpeg");
+        background-size: cover;
+        background-position: center center
+      }
+
+      .sticky-thing p {
+        font-size: 8rem;
+        font-weight: 900;
+        color: #fff;
+      }
+      .sticky-thing2 p {
+        font-size: 8rem;
+        font-weight: 900;
+        color: #fff;
+      }
+
+      .step {
+        margin: 0 auto 2rem auto;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step.is-active p {
+        background-color: goldenrod;
+        color: #3b3b3b;
+      }
+
+      .step p {
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.5rem;
+        background-color: #3b3b3b;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <nav>
+        <a href="https://github.com/sheridanwall">Sheridan Wall</a>
+        <div class="nav__examples">
+          <p>Examples:</p>
+          <a href="basic.html" target="_blank">Home</a>
+          <a href="https://twitter.com/sheridanlwall">Twitter</a>
+          <a href="https://linkedin.com/sheridanwall">LinkedIn</a>
+        </div>
+      </nav>
+      <section id="intro">
+        <h1 class="intro__hed">Filmmakers fight to stay afloat</h1>
+        <p class="intro__dek">
+          Amid economic losses and stringent safety protocols, independent film projects in New Mexico struggle to resume in-person production.
+        </p>
+      </section>
+
+      <section id="lede">
+        <p class = "plain_graphs">
+          Terry Futschik was on her way to the film set when she got the call. It was March 2020, and she was the producer on a Father’s Day freelance project for a local mega church, scheduled to start filming that week. <br></br>
+          
+          Futschik had just loaded the trunk of her car with the various props and wardrobe items, tasked with bringing to life childhood in the 80s. “The church has halted all productions in person,” Futschik said the director told her. 
+        </p>
+      </section>
+
+      <section id="scrolly">
+        <div class="sticky-thing">
+          <p></p>
+        </div>
+
+        <article>
+          <div class="step" data-step="" data-image="url('images/NMDesert.jpeg')">
+            <p>For Futschik and many other film workers in New Mexico, calls like these marked the beginning of months without work as the Covid-19 pandemic shut down film sets across the globe.</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/film-image.jpeg')">
+            <p>The pandemic began more than a year ago, but several film sets in New Mexico, an emerging industry hub, remain on pause. The state allowed film sites to reopen in late August but imposed rigorous safety requirements, leaving many independent projects, also struggling with other economic losses, unable to find room in their budget to resume filming in-person.</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/Netflix.jpeg')">
+            <p>“I would say, 80 percent of independent projects have been shut down. Either people are too afraid of the virus or it’s just the rules and regulations that the state has put out,” said Futschik, who also serves as the executive director of the New Mexico Film Foundation, a non-profit organization that supports independent films. “It’s definitely affected every aspect of it. I’m not seeing the auditions come in like they were.”</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/moreDesert.jpeg')">
+            <p>Albuquerque, New Mexico notably served as the backdrop for the award-winning AMC television series Breaking Bad, although the state’s natural landscape has long been an attraction for filmmakers, according to the state Economic Development Department’s website. In 2003, the state also introduced an incentive program, which currently offers a 25% to 35% tax credit to film companies launching projects in the area.</p>
+          </div>
+        </article>
+      </section>
+      <p class = "plain_graphs">
+        The state’s film industry has grown significantly over the last few years, especially in 2019, which served as a record year for production in New Mexico, said Jennifer Esquivel, the senior director of marketing and communications at the New Mexico Film Office. Netflix opened the state’s first major production studio in 2018 and announced an expansion in November. NBCUniversal also opened a production facility in the state in 2019. <br></br>
+        But in March, as the coronavirus ravaged the country, the state halted production until the end of August, Esquivel said. The shutdown caused significant economic loss with industry-related spending down to $275 million in fiscal year 2020, almost half of the $526 million spent in 2019.
+      </p>
+      <section id="outro">
+
+      </section>
+      <section id="scrolly2">
+        <div class="sticky-thing2">
+          <p></p>
+        </div>
+  
+        <article>
+          <div class="step" data-step="" data-image="url('images/desert2.jpeg')">
+            <p>“We experienced a global shutdown of production from mid-March 2020 and slowly began returning to work in the fall,” said Liz Pecos, president of the local International Alliance for Theatrical Stage Employees chapter, a union supporting some film workers. “The return to work has been gradual, but we still have many members who have not worked in over a year.”</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/film_set2.jpeg')">
+            <p>The shutdown was particularly hard on local, independent workers like Futschik. As an actor and producer, Futschik said she relies solely on the industry for her income. “This is how I make a living, and I had zero income. Zero. All projects stopped,” Futschik said.</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/desert3.jpeg')">
+            <p>When the state authorized on-site filming to begin at the start of September, it also required film sets to adhere to specific safety protocols developed in partnership with local unions and guilds. But the guidelines, Futschik said, make it nearly impossible for independent projects with unionized workers to resume, posing both a cost and logistical burden.</p>
+          </div>
+          <div class="step" data-step="" data-image="url('images/santa_fe.jpeg')">
+            <p>These guidelines Back2One and the Return to Work Agreement, mandating unionized film sets to implement daily health screenings, including temperature checks upon entry to the set, designate specific personnel to manage Covid-19 safety practices, provide hand sanitizing stations and personal protective equipment to employees, among other safety measures, according to the documents.</p>
+          </div>
+        </article>
+      </section>
+  
+      <section id="outro2">
+        <p class = "plain_graphs2">
+          The agreement also specifies “zones” of employees based on their level of interaction with others and frequency on set. It outlines a testing protocol for each zone, requiring testing ranging from every three days to once every two weeks. Employers are responsible for funding employee testing, according to the Back2One document. <br><br/>
+          Despite economic losses from the shutdown, the film industry in New Mexico remains secure, Esquivel said. “We have a deep pipeline of projects for 2021 and our office continues to field calls from productions who are interested in filming in our state.”<br><br/>
+          Futschik said she is scheduled to resume production in May on an independent film that she’s been working on for two and a half years. Filming has been pushed back twice due to the pandemic. But with vaccine distribution well underway, Futschik said she’s hoping the project will move forward and other independent projects will pick back up again.<br><br/>
+          “Everyone is very optimistic in this state when it comes to the film industry. That’s the great part about this whole thing. New Mexico people, they’re very collaborative. We all work together,” Futschik said. “It’s a passion for all of us.”
+        </p>
+      </section>
+    </main>
+
+    <!-- <div class='debug'></div> -->
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script>
+      // using d3 for convenience
+      var main = document.querySelector("main");
+        var scrolly = main.querySelector("#scrolly");
+        var sticky = scrolly.querySelector(".sticky-thing");
+        var article = scrolly.querySelector("article");
+        var steps = article.querySelectorAll(".step");
+        var scrolly2 = main.querySelector("#scrolly2");
+        var sticky2 = scrolly2.querySelector(".sticky-thing2");
+        var article2 = scrolly2.querySelector("article");
+        var steps2 = article2.querySelectorAll(".step");
+
+      // initialize the scrollama
+      var scroller = scrollama();
+      var scroller2 = scrollama();
+
+      // scrollama event handlers
+      function handleStepEnter(response) {
+        // response = { element, direction, index }
+        var el = response.element;
+
+        // remove is-active from all steps
+        // then add is-active to this step
+        steps.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        // update graphic based on step
+        // sticky.querySelector("p").innerText = el.dataset.step;
+        sticky.style.backgroundImage = el.dataset.image;
+
+      }
+      
+      function handleStepEnter2(response) {
+        // response = { element, direction, index }
+        var el = response.element;
+
+        // remove is-active from all steps
+        // then add is-active to this step
+        steps2.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        // update graphic based on step
+        // sticky.querySelector("p").innerText = el.dataset.step;
+        sticky2.style.backgroundImage = el.dataset.image;
+        
+      }
+
+      function init() {
+        // 2. setup the scroller passing options
+        // 		this will also initialize trigger observations
+        // 3. bind scrollama event handlers (this can be chained like below)
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: 0.33,
+            debug: true
+          })
+          .onStepEnter(handleStepEnter);
+          
+          scroller2
+          .setup({
+            step: "#scrolly2 article .step",
+            offset: 0.33,
+            debug: true
+          })
+          .onStepEnter(handleStepEnter2);
+
+        // setup resize event
+        window.addEventListener("resize", scroller.resize);
+        window.addEventListener("resize", scroller2.resize);
+      }
+
+      // kick things off
+      init();
+    </script>
+    
+  </body>
+</html>
