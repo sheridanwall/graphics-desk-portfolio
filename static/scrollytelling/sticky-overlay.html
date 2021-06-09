@@ -8,33 +8,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
     <style>
+      p {
+        line-height: 1.3;
+      }
+      #intro {
+        margin-bottom: 100px;
+      }
+      #outro {
+        margin-top: 100px;
+        margin-bottom: 100px;
+      }
       #scrolly {
         position: relative;
-        background-color: #f3f3f3;
-        padding: 1rem;
       }
       #scrolly2 {
         position: relative;
-        background-color: #f3f3f3;
-        padding: 1rem;
       }
     
 
       article {
         position: relative;
         padding: 0;
-        max-width: 20rem;
+        max-width: 40rem;
         margin: 0 auto;
+        padding-top: 100px;
+        padding-bottom: 100px;
       }
 
       .sticky-thing {
+        transition: background-image .2s;
         position: -webkit-sticky;
         position: sticky;
         left: 0;
         width: 100%;
         margin: 0;
         background-color: #8a8a8a;
-        z-index: 0;
+        z-index: -1;
         top: 12.5vh;
         height: 75vh;
         /* Center everything inside */
@@ -46,13 +55,14 @@
         background-position: center center
       }
       .sticky-thing2 {
+        transition: background-image .2s;
         position: -webkit-sticky;
         position: sticky;
         left: 0;
         width: 100%;
         margin: 0;
         background-color: #8a8a8a;
-        z-index: 0;
+        z-index: -1;
         top: 12.5vh;
         height: 75vh;
         /* Center everything inside */
@@ -95,6 +105,13 @@
         padding: 1rem;
         font-size: 1.5rem;
         background-color: #3b3b3b;
+        margin-bottom: 300px;
+      }
+
+      .narrow-column {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
   </head>
@@ -104,7 +121,7 @@
       <nav>
         <a href="https://github.com/sheridanwall">Sheridan Wall</a>
         <div class="nav__examples">
-          <p>Examples:</p>
+          <p></p>
           <a href="basic.html" target="_blank">Home</a>
           <a href="https://twitter.com/sheridanlwall">Twitter</a>
           <a href="https://linkedin.com/sheridanwall">LinkedIn</a>
@@ -117,7 +134,7 @@
         </p>
       </section>
 
-      <section id="lede">
+      <section id="lede" class = "narrow-column">
         <p class = "plain_graphs">
           Terry Futschik was on her way to the film set when she got the call. It was March 2020, and she was the producer on a Father’s Day freelance project for a local mega church, scheduled to start filming that week. <br></br>
           
@@ -145,13 +162,11 @@
           </div>
         </article>
       </section>
-      <p class = "plain_graphs">
+      <p class = "plain_graphs narrow-column">
         The state’s film industry has grown significantly over the last few years, especially in 2019, which served as a record year for production in New Mexico, said Jennifer Esquivel, the senior director of marketing and communications at the New Mexico Film Office. Netflix opened the state’s first major production studio in 2018 and announced an expansion in November. NBCUniversal also opened a production facility in the state in 2019. <br></br>
         But in March, as the coronavirus ravaged the country, the state halted production until the end of August, Esquivel said. The shutdown caused significant economic loss with industry-related spending down to $275 million in fiscal year 2020, almost half of the $526 million spent in 2019.
       </p>
-      <section id="outro">
-
-      </section>
+    
       <section id="scrolly2">
         <div class="sticky-thing2">
           <p></p>
@@ -174,7 +189,7 @@
       </section>
   
       <section id="outro2">
-        <p class = "plain_graphs2">
+        <p class = "plain_graphs2 narrow-column">
           The agreement also specifies “zones” of employees based on their level of interaction with others and frequency on set. It outlines a testing protocol for each zone, requiring testing ranging from every three days to once every two weeks. Employers are responsible for funding employee testing, according to the Back2One document. <br><br/>
           Despite economic losses from the shutdown, the film industry in New Mexico remains secure, Esquivel said. “We have a deep pipeline of projects for 2021 and our office continues to field calls from productions who are interested in filming in our state.”<br><br/>
           Futschik said she is scheduled to resume production in May on an independent film that she’s been working on for two and a half years. Filming has been pushed back twice due to the pandemic. But with vaccine distribution well underway, Futschik said she’s hoping the project will move forward and other independent projects will pick back up again.<br><br/>
@@ -233,6 +248,14 @@
         
       }
 
+      function handleStepExit(response) {
+        steps.forEach(step => step.classList.remove('is-active'));
+      }
+
+      function handleStepExit2(response) {
+        steps2.forEach(step => step.classList.remove('is-active'));
+      }
+
       function init() {
         // 2. setup the scroller passing options
         // 		this will also initialize trigger observations
@@ -241,17 +264,19 @@
           .setup({
             step: "#scrolly article .step",
             offset: 0.33,
-            debug: true
+            debug: false
           })
-          .onStepEnter(handleStepEnter);
+          .onStepEnter(handleStepEnter)
+          .onStepExit(handleStepExit);
           
           scroller2
           .setup({
             step: "#scrolly2 article .step",
             offset: 0.33,
-            debug: true
+            debug: false
           })
-          .onStepEnter(handleStepEnter2);
+          .onStepEnter(handleStepEnter2)
+          .onStepExit(handleStepExit2);
 
         // setup resize event
         window.addEventListener("resize", scroller.resize);
