@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Women in Parliament</title>
+    <meta name="description" content="Scrollama: Sticky Overlay Example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #scrolly {
+        position: relative;
+      }
+
+      article {
+        position: relative;
+        padding: 0;
+        max-width: 30rem;
+        margin: 0 auto;
+        padding-bottom: 10rem;
+      }
+
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        z-index: 0;
+
+        /* Make 75%, centered */
+        top: 12.5vh;
+        height: 75vh;
+
+        /* Make full-height */
+        top: 0vh;
+        height: 100vh;
+
+        /* Center everything inside */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .step {
+        margin: 0 auto 20rem auto;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step.is-active {
+        background-color: rgba(0, 0, 0, 1);
+      }
+
+      .step p {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      #intro p {
+        font-size: 0.75em;
+        padding: 15px;
+      }
+
+      #sub-intro p {
+        margin: 5rem;
+        font-size: 0.75em;
+        padding: 15px;
+      }
+    
+    </style>
+    <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
+    <script src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+  </head>
+
+  <body>
+    <main>
+
+      <section id="intro">
+        <h1>Women are underrepresented in most national governing bodies</h1>
+        <p>The United Nations Sustainable Development Initiative published data on the share of women in national parliaments in 2020. Data on the percentage of women in the population for each country was published by the World Bank in 2019. </p>
+      </section>
+
+      <section id="sub-intro">
+        <p>The share of women in national parliaments still lags significantly behind the share of women in the total population in most countries, according to 2020 data from the United Nations’ Sustainable Development initiative and 2019 population data from the World Bank.  The chart below categorizes countries by representation level based on the difference between the share of women in parliament and the share of women in the population. Severe Under includes countries with a difference exceeding 35; Moderate Under includes countries with a difference between 35 and 25; Low Under includes countries with a difference between 25 and 10; Near Equal includes countries with a difference between 10 and 0; and Over represents countries with a difference less than 0. </p>
+      </section>
+
+      <section id="scrolly">
+        <div class="sticky-thing">
+          <div id="chart"></div>
+        </div>
+
+        <article>
+          <div class="step" id="step-1">
+            <p>Women are severely underrepresented in the parliaments of 43 countries, based on the difference between the share of women in the total population and the share of total parliamentary seats occupied by women in each nation. Some of these countries include Japan, Haiti and Brazil.</p>
+          </div>
+          <div class="step" id="step-2">
+            <p>Other countries have a larger percentage of women in their national parliaments, but women still comprise a relatively low share of the seats compared to men. For example, in the United States, women make up the majority of the population, but only 23.43 percent of Congressional seats. In Ukraine, women make up 54 percent of the population, but only 20.8 percent of parliament.</p>
+          </div>
+          <div class="step" id="step-3">
+            <p>Saudia Arabia has a relatively low percentage of women in the population, and less than 20 percent of parliamentary seats belong to women. Other countries of interest in the Low Under category include France, Canada and the United Kingdom. </p>
+          </div>
+          <div class="step" id="step-4">
+            <p>The countries highlighted here have a relatively proportional number of women in parliament compared to the percentage of women in the population. Spain, for example, as 44 percent of its parliamentary seats occupied by women, and Mexico has 48.2 percent of seats in its national governing body occupied by women.</p>
+          </div>
+          <div class="step" id="step-5">
+            <p>Only four countries have a larger percentage of women than men in their national governing bodies. These countries include Bolivia, Cuba, the United Arab Emirates and Rwanda. </p>
+          </div>
+          <div><!-- spacer --></div>
+        </article>
+      </section>
+
+      <section id="outro"></section>
+    </main>
+
+    <!-- <div class='debug'></div> -->
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js" integrity="sha512-cd6CHE+XWDQ33ElJqsi0MdNte3S+bQY819f7p3NUHgwQQLXSKjE4cPZTeGNI+vaxZynk1wVU3hoHmow3m089wA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      // using d3 for convenience
+      var main = document.querySelector("main");
+      var scrolly = main.querySelector("#scrolly");
+      var article = scrolly.querySelector("article");
+      var steps = article.querySelectorAll(".step");
+
+      // initialize the scrollama
+      var scroller = scrollama();
+
+      function handleStepEnter(response) {
+        const el = response.element;
+        const dir = response.direction;
+
+        // Remove is-active from all steps then add is-active to this step
+        steps.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        d3.select(el).dispatch('stepin');
+      }
+
+      function handleStepExit(response) {
+        const el = response.element;
+        const dir = response.direction;
+        if(dir === "up") {
+          d3.select(el).dispatch('stepout')
+        }
+      }
+
+      function init() {
+        // 2. setup the scroller passing options
+        // 		this will also initialize trigger observations
+        // 3. bind scrollama event handlers (this can be chained like below)
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: 0.5,
+            debug: false
+          })
+          .onStepEnter(handleStepEnter)
+          .onStepExit(handleStepExit);
+
+        // setup resize event
+        window.addEventListener("resize", scroller.resize);
+      }
+
+      // kick things off
+      init();
+    </script>
+
+    <script src="d3-add-remove.js"></script>
+  </body>
+</html>

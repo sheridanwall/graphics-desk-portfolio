@@ -1,0 +1,183 @@
+﻿CountryName,Pct_seats,Pct_pop,rep_level
+Bulgaria,26.67,51.42861184,Moderate Under
+Myanmar,11.11,51.80967224,Severe Under
+Burundi,36.36,50.40154539,Low Under
+Belarus,40,53.45194014,Low Under
+Cambodia,20,51.18828436,Moderate Under
+Algeria,25.76,49.48171156,Low Under
+Cameroon,31.11,49.99329698,Low Under
+Canada,28.99,50.37951633,Low Under
+Cabo Verde,25,49.80579558,Moderate Under
+Central African Republic,8.57,50.43447255,Severe Under
+Sri Lanka,5.33,52.00927286,Severe Under
+Chad,15.43,50.0810127,Moderate Under
+Chile,22.58,50.7083329,Moderate Under
+China,24.94,48.69349797,Low Under
+Colombia,18.34,50.90690018,Moderate Under
+Comoros,6.06,49.55758141,Severe Under
+Congo,11.26,50.05378678,Severe Under
+Democratic Republic of the Congo,12.8,50.08777567,Severe Under
+Costa Rica,45.61,50.02459604,Near Equal
+Croatia,19.21,51.81910559,Moderate Under
+Cuba,53.22,50.34247192,Over
+Cyprus,19.64,49.99916568,Moderate Under
+Czechia,22.5,50.78563782,Moderate Under
+Benin,7.23,50.07897111,Severe Under
+Denmark,39.66,50.2818234,Low Under
+Dominican Republic,27.89,50.03054766,Low Under
+Ecuador,39.42,49.97894226,Low Under
+El Salvador,33.33,53.15209458,Low Under
+Equatorial Guinea,21,44.40759538,Low Under
+Ethiopia,38.76,49.97355029,Low Under
+Estonia,28.71,52.73062477,Low Under
+Angola,30,50.52747501,Low Under
+Fiji,19.61,49.32788737,Moderate Under
+Finland,46,50.70260996,Near Equal
+France,39.51,51.59738338,Low Under
+Djibouti,26.15,47.41478927,Low Under
+Gabon,14.79,49.0838994,Moderate Under
+Georgia,14.09,52.31782628,Severe Under
+Gambia,8.62,50.40397053,Severe Under
+Germany,31.17,50.60994494,Low Under
+Antigua and Barbuda,11.11,51.75719508,Severe Under
+Ghana,13.09,49.31896256,Severe Under
+Kiribati,6.52,50.83497721,Severe Under
+Greece,20.67,50.91857011,Moderate Under
+Grenada,46.67,49.62054249,Near Equal
+Azerbaijan,16.81,50.07987385,Moderate Under
+Argentina,40.86,51.2258022,Low Under
+Guatemala,18.99,50.74389659,Moderate Under
+Guinea,22.81,51.7190805,Moderate Under
+Guyana,34.78,49.75938169,Low Under
+Haiti,2.54,50.65651231,Severe Under
+Honduras,21.09,50.04169354,Moderate Under
+Hungary,12.06,52.41711652,Severe Under
+Iceland,38.1,49.7901409,Low Under
+India,14.36,48.0298343,Moderate Under
+Australia,30.46,50.19953419,Low Under
+Indonesia,20.35,49.64638319,Moderate Under
+Iran (Islamic Republic of),5.88,49.47783962,Severe Under
+Iraq,26.44,49.39730152,Low Under
+Ireland,20.89,50.38568372,Moderate Under
+Israel,23.33,50.26245476,Moderate Under
+Italy,35.71,51.34435964,Low Under
+C√¥te d'Ivoire,11.95,49.54920477,Severe Under
+Jamaica,17.46,50.35337589,Moderate Under
+Japan,9.91,51.16651112,Severe Under
+Kazakhstan,27.1,51.48754047,Low Under
+Afghanistan,27.02,48.66239485,Low Under
+Austria,39.34,50.76128618,Low Under
+Jordan,15.38,49.38261363,Moderate Under
+Kenya,21.78,50.31308556,Moderate Under
+Democratic People's Republic of Korea,17.61,51.0921658,Moderate Under
+Republic of Korea,17.29,49.92816736,Moderate Under
+Kuwait,6.35,39.07753531,Moderate Under
+Kyrgyzstan,19.17,50.53030377,Moderate Under
+Lao People's Democratic Republic,27.52,49.80054275,Low Under
+Lebanon,4.69,49.68797538,Severe Under
+Lesotho,23.33,50.69118374,Moderate Under
+Latvia,30,53.95554716,Low Under
+Liberia,12.33,49.74826699,Severe Under
+Libya,15.96,49.49992276,Moderate Under
+Bahamas,12.82,51.41545524,Severe Under
+Lithuania,24.11,53.74464919,Moderate Under
+Luxembourg,30,49.47298329,Low Under
+Madagascar,15.89,50.11763002,Moderate Under
+Malawi,22.92,50.69299608,Moderate Under
+Malaysia,14.41,48.59695631,Moderate Under
+Maldives,4.6,36.70485557,Moderate Under
+Mali,9.52,49.92102207,Severe Under
+Malta,13.43,49.86500203,Severe Under
+Mauritania,20.26,49.80126822,Moderate Under
+Bahrain,15,35.72872668,Low Under
+Mauritius,20,50.61937354,Moderate Under
+Mexico,48.2,51.08513875,Near Equal
+Mongolia,17.33,50.70232044,Moderate Under
+Republic of Moldova,24.75,52.0721161,Moderate Under
+Montenegro,29.63,50.55542463,Low Under
+Bangladesh,20.92,49.41691088,Moderate Under
+Morocco,20.51,50.39159058,Moderate Under
+Mozambique,41.2,51.43966897,Low Under
+Armenia,23.48,52.96156374,Moderate Under
+Oman,2.33,33.98083856,Moderate Under
+Namibia,42.71,51.53937184,Near Equal
+Barbados,20,51.63663983,Moderate Under
+Nepal,32.73,54.39517993,Low Under
+Netherlands,33.33,50.19726418,Low Under
+Vanuatu,0,49.30072495,Severe Under
+New Zealand,40.83,50.8439991,Low Under
+Nicaragua,47.25,50.71449818,Near Equal
+Belgium,40.67,50.50422356,Near Equal
+Niger,16.96,49.74646213,Moderate Under
+Nigeria,3.43,49.32820049,Severe Under
+Norway,41.42,49.49092363,Near Equal
+Micronesia (Federated States of),0,49.15517832,Severe Under
+Pakistan,20.18,48.53858293,Moderate Under
+Panama,22.54,49.92431307,Moderate Under
+Papua New Guinea,0,48.95225327,Severe Under
+Paraguay,16.25,49.16860892,Moderate Under
+Peru,30,50.32909406,Low Under
+Philippines,27.96,49.76158985,Low Under
+Poland,28.7,51.53966962,Low Under
+Portugal,40,52.70301378,Low Under
+Guinea-Bissau,13.73,51.12422869,Severe Under
+Timor-Leste,38.46,49.46277221,Low Under
+Qatar,9.76,24.66569518,Low Under
+Bhutan,14.89,46.9223975,Moderate Under
+Romania,21.88,51.36327408,Moderate Under
+Russian Federation,15.78,53.65606867,Severe Under
+Rwanda,61.25,50.85042787,Over
+Saint Lucia,16.67,50.75302935,Moderate Under
+Saint Vincent and the Grenadines,13.04,49.2761748,Severe Under
+Sao Tome and Principe,14.55,49.95954392,Severe Under
+Bolivia (Plurinational State of),53.08,49.79970646,Over
+Saudi Arabia,19.87,42.26909477,Low Under
+Senegal,43.03,51.2379941,Near Equal
+Serbia,37.65,51.01080364,Low Under
+Seychelles,21.21,48.67353516,Moderate Under
+Sierra Leone,12.33,50.10563524,Severe Under
+Bosnia and Herzegovina,21.43,51.02090338,Moderate Under
+Singapore,24,47.65598794,Low Under
+Slovakia,20.67,51.31927509,Moderate Under
+Viet Nam,26.72,50.08262519,Low Under
+Slovenia,27.78,50.2233657,Low Under
+Somalia,24.36,50.13764896,Moderate Under
+South Africa,46.35,50.71694659,Near Equal
+Zimbabwe,31.85,52.317327,Low Under
+Botswana,10.77,51.63803667,Severe Under
+Spain,44,50.87242421,Near Equal
+South Sudan,28.46,49.95052483,Low Under
+Sudan,27.65,50.04359049,Low Under
+Suriname,31.37,49.72934294,Low Under
+Eswatini,9.59,50.98215973,Severe Under
+Sweden,46.99,49.92625337,Near Equal
+Switzerland,41.5,50.40761295,Near Equal
+Brazil,14.62,50.84890006,Severe Under
+Syrian Arab Republic,12.4,49.88585911,Severe Under
+Tajikistan,19.05,49.59831126,Moderate Under
+Thailand,16.2,51.30403867,Severe Under
+Togo,18.68,50.2540533,Moderate Under
+Tonga,7.41,49.9641138,Severe Under
+Trinidad and Tobago,30.95,50.60951175,Low Under
+United Arab Emirates,50,30.74266421,Over
+Tunisia,24.88,50.42224607,Moderate Under
+Turkey,17.32,50.64856412,Moderate Under
+Turkmenistan,25,50.76335043,Moderate Under
+Albania,29.51,49.08610569,Low Under
+Uganda,34.86,50.74007354,Low Under
+Ukraine,20.8,53.67734607,Moderate Under
+North Macedonia,40,49.97235365,Near Equal
+Egypt,15.1,49.47348229,Moderate Under
+United Kingdom of Great Britain and Northern Ireland,33.85,50.61253445,Low Under
+United Republic of Tanzania,36.9,50.03811624,Low Under
+Belize,9.38,50.22915274,Severe Under
+United States of America,23.43,50.51848721,Moderate Under
+Burkina Faso,13.39,50.06356605,Severe Under
+Uruguay,21.21,51.70367079,Moderate Under
+Uzbekistan,32,50.12352754,Low Under
+Venezuela (Bolivarian Republic of),22.16,50.74585417,Moderate Under
+Samoa,10,48.24575201,Severe Under
+Yemen,0.33,49.61825904,Severe Under
+Zambia,16.77,50.48879029,Moderate Under
+Solomon Islands,6.12,49.15328125,Severe Under
+Brunei Darussalam,9.09,48.07660352,Severe Under
